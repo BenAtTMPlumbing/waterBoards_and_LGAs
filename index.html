@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>TM Plumbing Map Viewer</title>
+    <title>T&M Plumbing - VIC Water Retailer and NSW LGA Map viewer </title>
 
 ```
 <script src="https://api.mapbox.com/mapbox-gl-js/v3.15.0/mapbox-gl.js"></script>
@@ -66,8 +66,8 @@
     // DEFAULT LOCATION
     // ---------------------------------------------------
 
-    const defaultLat = -36.0605329;
-    const defaultLon = 146.4589879;
+    const defaultLat = -36.38416754313632;
+    const defaultLon = 145.4301754683961;
 
     const mapLat = isNaN(lat) ? defaultLat : lat;
     const mapLon = isNaN(lon) ? defaultLon : lon;
@@ -80,7 +80,7 @@
         container: 'map',
         style: 'mapbox://styles/bhoward-tm-plumbing/cmpze0ws0003q01r916vv4toj',
         center: [mapLon, mapLat],
-        zoom: 14
+        zoom: 11
     });
 
     map.on('load', () => {
