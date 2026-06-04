@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Excel Map Link</title>
+    <script src="https://mapbox.com"></script>
+    <link href="https://mapbox.com" rel="stylesheet" />
+    <style>body { margin: 0; padding: 0; } #map { position: absolute; top: 0; bottom: 0; width: 100%; }</style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+    // 1. Get Lat/Lon parameters out of the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const lat = parseFloat(urlParams.get('lat')) || 0;
+    const lng = parseFloat(urlParams.get('lon')) || 0;
+
+    mapboxgl.accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN';
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'YOUR_MAPBOX_STUDIO_STYLE_URL', // Put your Mapbox Studio style URL here
+        center: [lng, lat], // Mapbox uses [Longitude, Latitude]
+        zoom: 15
+    });
+
+    // Optional: Add a marker exactly where the Excel row points
+    new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map);
+</script>
+</body>
+</html>
