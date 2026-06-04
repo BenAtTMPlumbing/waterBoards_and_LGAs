@@ -1,43 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="utf-8">
-    <title>Testing Excel Variables</title>
-    <style>
-        body { font-family: monospace; padding: 40px; background: #f0f0f0; font-size: 18px; line-height: 1.6; }
-        .box { background: white; padding: 20px; border-radius: 8px; border: 1px solid #ccc; max-width: 600px; }
-        .success { color: green; font-weight: bold; }
-        .fail { color: red; font-weight: bold; }
-    </style>
+<meta charset="utf-8">
+
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.15.0/mapbox-gl.js"></script>
+
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.15.0/mapbox-gl.css"
+rel="stylesheet">
+
+<style>
+body { margin:0; }
+#map {
+    width:100vw;
+    height:100vh;
+}
+</style>
 </head>
+
 <body>
 
-<div class="box">
-    <h2>Excel-to-Web Variable Test</h2>
-    <p><strong>Latitude:</strong> <span id="lat-val">Waiting...</span></p>
-    <p><strong>Longitude:</strong> <span id="lon-val">Waiting...</span></p>
-    <p><strong>Token Status:</strong> <span id="token-val">Waiting...</span></p>
-</div>
+<div id="map"></div>
 
 <script>
-    // Grab variables from URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const lat = urlParams.get('lat');
-    const lon = urlParams.get('lon');
-    const token = urlParams.get('token');
 
-    // Display Latitude
-    document.getElementById('lat-val').innerHTML = lat ? lat : '<span class="fail">MISSING</span>';
-    
-    // Display Longitude
-    document.getElementById('lon-val').innerHTML = lon ? lon : '<span class="fail">MISSING</span>';
-    
-    // Display Token Status safely (hiding most of it)
-    if (token) {
-        document.getElementById('token-val').innerHTML = `<span class="success">FOUND</span> (Starts with: ${token.substring(0, 10)}...)`;
-    } else {
-        document.getElementById('token-val').innerHTML = '<span class="fail">MISSING</span>';
-    }
+mapboxgl.accessToken = 'pk.eyJ1IjoiYmhvd2FyZC10bS1wbHVtYmluZyIsImEiOiJjbXB6aGF2b2IwaHZ5MnJvbnY1NXQ0eWZwIn0.X6ihykMSNjihdbP-yIbDEQ';
+
+const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v12',
+    center: [151.2153,-33.8568],
+    zoom: 15
+});
+
 </script>
 
 </body>
