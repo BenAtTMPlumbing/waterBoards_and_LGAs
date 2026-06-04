@@ -1,38 +1,120 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
+
 <head>
-<meta charset="utf-8">
+    <meta charset="utf-8">
+    <title>TM Plumbing Map Viewer</title>
 
+```
 <script src="https://api.mapbox.com/mapbox-gl-js/v3.15.0/mapbox-gl.js"></script>
-
-<link href="https://api.mapbox.com/mapbox-gl-js/v3.15.0/mapbox-gl.css"
-rel="stylesheet">
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.15.0/mapbox-gl.css" rel="stylesheet">
 
 <style>
-body { margin:0; }
-#map {
-    width:100vw;
-    height:100vh;
-}
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    #map {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    #error {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: white;
+        border: 1px solid #ccc;
+        padding: 10px;
+        z-index: 1000;
+        display: none;
+        max-width: 500px;
+    }
 </style>
+```
+
 </head>
 
 <body>
 
+<div id="error"></div>
 <div id="map"></div>
 
 <script>
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiYmhvd2FyZC10bS1wbHVtYmluZyIsImEiOiJjbXB6aGF2b2IwaHZ5MnJvbnY1NXQ0eWZwIn0.X6ihykMSNjihdbP-yIbDEQ';
+    // ---------------------------------------------------
+    // HARDCODED TOKEN
+    // ---------------------------------------------------
 
-const map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v12',
-    center: [151.2153,-33.8568],
-    zoom: 15
-});
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYmhvd2FyZC10bS1wbHVtYmluZyIsImEiOiJjbXB6aGF2b2IwaHZ5MnJvbnY1NXQ0eWZwIn0.X6ihykMSNjihdbP-yIbDEQ';
+
+    // ---------------------------------------------------
+    // URL PARAMETERS
+    // ---------------------------------------------------
+
+    const params = new URLSearchParams(window.location.search);
+
+    const lat = parseFloat(params.get('lat'));
+    const lon = parseFloat(params.get('lon'));
+
+    console.log('Latitude:', lat);
+    console.log('Longitude:', lon);
+
+    // ---------------------------------------------------
+    // DEFAULT LOCATION
+    // ---------------------------------------------------
+
+    const defaultLat = -36.0605329;
+    const defaultLon = 146.4589879;
+
+    const mapLat = isNaN(lat) ? defaultLat : lat;
+    const mapLon = isNaN(lon) ? defaultLon : lon;
+
+    // ---------------------------------------------------
+    // MAP
+    // ---------------------------------------------------
+
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/bhoward-tm-plumbing/cmpze0ws0003q01r916vv4toj',
+        center: [mapLon, mapLat],
+        zoom: 14
+    });
+
+    map.on('load', () => {
+
+        console.log('Map Loaded');
+
+        if (!isNaN(lat) && !isNaN(lon)) {
+
+            new mapboxgl.Marker({
+                color: '#FF0000'
+            })
+            .setLngLat([lon, lat])
+            .addTo(map);
+
+        }
+
+    });
+
+    map.on('error', (e) => {
+
+        console.error(e);
+
+        const errorDiv = document.getElementById('error');
+
+        errorDiv.style.display = 'block';
+        errorDiv.innerHTML =
+            '<strong>Map Error</strong><br><br>' +
+            JSON.stringify(e.error);
+
+    });
 
 </script>
 
 </body>
+
 </html>
+
