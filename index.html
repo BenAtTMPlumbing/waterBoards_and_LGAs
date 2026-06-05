@@ -53,6 +53,7 @@
     // ---------------------------------------------------
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiYmhvd2FyZC10bS1wbHVtYmluZyIsImEiOiJjbXB6aGF2b2IwaHZ5MnJvbnY1NXQ0eWZwIn0.X6ihykMSNjihdbP-yIbDEQ';
+	const defaultZoom = 13.5; // smaller numbers has a wider view. 0 - is a global view, 3, Large Countries, 9 Broad Metro Areas, 13 Suburb, 14 Neighbourhood, 17-18 building
 
     // ---------------------------------------------------
     // URL PARAMETERS
@@ -86,7 +87,7 @@
         container: 'map',
         style: 'mapbox://styles/bhoward-tm-plumbing/cmpze0ws0003q01r916vv4toj',
         center: [mapLon, mapLat],
-        zoom: 15
+        zoom: defaultZoom
     });
 
     // ---------------------------------------------------
